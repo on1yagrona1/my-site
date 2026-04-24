@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Farah 💙</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* نجوم */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    animation: twinkle 2s infinite;
+}
+@keyframes twinkle {
+    0%,100%{opacity:0;}
+    50%{opacity:1;}
+}
+
+/* نيون حسين */
+.neon {
+    font-size: 40px;
+    color: #00c6ff;
+    text-shadow:
+    0 0 10px #00c6ff,
+    0 0 20px #00c6ff,
+    0 0 40px #00c6ff;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%,100%{opacity:1;}
+    50%{opacity:0.5;}
+}
+
+#screen {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+input, button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+button {
+    background: #00c6ff;
+    color: white;
+    cursor: pointer;
+}
+
+#main, #stage2, #chat {
+    display: none;
+}
+
+img {
+    width: 220px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px #00c6ff;
+}
+
+.message {
+    margin-top: 15px;
+    line-height: 1.8;
+}
+
+/* قلوب */
+.heart {
+    position: absolute;
+    color: red;
+    animation: float 5s linear infinite;
+}
+@keyframes float {
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-800px);}
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="screen">
+
+<div id="login">
+    <h1>💙 فرح 💙</h1>
+    <p>ادخلي كلمة السر</p>
+    <input type="password" id="pass">
+    <br><br>
+    <button onclick="check()">دخول</button>
+</div>
+
+<div id="stage2">
+    <h1>سؤال صغير 💭</h1>
+    <p>منو أكثر شخص يحبج؟</p>
+    <button onclick="next()">حسين 😏</button>
+</div>
+
+<div id="main">
+
+    <!-- صوت -->
+    <audio id="voice">
+        <source src="https://dl.sndup.net/xyz1/hussain_y7bch.mp3">
+    </audio>
+
+    <!-- موسيقى -->
+    <audio autoplay loop>
+        <source src="https://dl.sndup.net/xyz1/entyt7bny.mp3">
+    </audio>
+
+    <h1>فرح... 💙</h1>
+
+    <div class="neon">حسين يحبج 💙</div>
+
+    <br>
+
+    <img src="https://i.imgur.com/6XbZQ5F.png">
+
+    <div class="message">
+        أُحِبُّكِ حُبًّا لو تَجَسَّدَ نُورًا<br>
+        لأضاءَ العالَمَ... 💙<br><br>
+
+        ما عُدتُ أَرى الدُّنيا كما كانت<br>
+        منذ صارت عيناكِ طريقي...<br><br>
+
+        انتي مو بس حب… انتي حياتي كلها ❤️
+    </div>
+
+    <br>
+    <button onclick="showChat()">💬 احجي وياي</button>
+    <button onclick="surprise()">🎁 مفاجأة</button>
+
+</div>
+
+<div id="chat">
+    <h1>💬</h1>
+    <p id="chatText">هلا فرح... 💙</p>
+    <button onclick="talk()">ردي</button>
+</div>
+
+</div>
+
+<script>
+
+/* كلمة السر */
+function check(){
+    let p = document.getElementById("pass").value;
+    if(p === "farah"){
+        login.style.display="none";
+        stage2.style.display="block";
+    } else {
+        alert("غلط 😢");
+    }
+}
+
+/* المرحلة الثانية */
+function next(){
+    stage2.style.display="none";
+    main.style.display="block";
+    hearts();
+
+    /* تشغيل الصوت */
+    document.getElementById("voice").play();
+
+    /* رسالة سرية بعد 5 ثواني */
+    setTimeout(()=>{
+        alert("فرح... حتى من ما أحجي، قلبي يحچي باسمج 💙");
+    },5000);
+}
+
+/* مفاجأة */
+function surprise(){
+    alert("حسين يحبج أكثر من أي شي بالدنيا 💙");
+}
+
+/* شات */
+let msgs = [
+"شلونج اليوم؟ 💙",
+"اشتقت لج هواي 😔",
+"حسين يحبج أكثر من أي شخص ❤️",
+"انتي احلى شي بحياتي 💙",
+"دوم ابتسمي ok؟ 🥺",
+"احبج 😳"
+];
+
+function showChat(){
+    main.style.display="none";
+    chat.style.display="block";
+}
+
+function talk(){
+    let msg = msgs[Math.floor(Math.random()*msgs.length)];
+    document.getElementById("chatText").innerText = msg;
+}
+
+/* قلوب */
+function hearts(){
+    setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerHTML="❤️";
+        h.style.left=Math.random()*100+"vw";
+        h.style.top="100vh";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),5000);
+    },300);
+}
+
+/* نجوم */
+for(let i=0;i<120;i++){
+    let s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    document.body.appendChild(s);
+}
+
+</script>
+
+</body>
+</html>

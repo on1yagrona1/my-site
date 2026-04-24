@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>قصر خالتي إيمان</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  overflow-x:hidden;
+}
+
+/* خلفية قصر */
+.bg {
+  position:fixed;
+  inset:0;
+  background: linear-gradient(to bottom right, #ffd1dc, #d8b4fe);
+  z-index:-2;
+}
+
+/* ورود طايرة */
+.flower {
+  position:absolute;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh); opacity:0; }
+  10% { opacity:1; }
+  100% { transform: translateY(110vh); opacity:0; }
+}
+
+/* باب القصر */
+.door {
+  position:fixed;
+  top:0;
+  width:50%;
+  height:100%;
+  background: linear-gradient(#f9a8d4,#ec4899);
+  z-index:50;
+}
+
+.left { left:0; animation: openL 2s forwards; }
+.right { right:0; animation: openR 2s forwards; }
+
+@keyframes openL {
+  to { transform: translateX(-100%); }
+}
+@keyframes openR {
+  to { transform: translateX(100%); }
+}
+
+.centerBtn {
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:60;
+}
+
+.card {
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div id="door" class="centerBtn">
+  <div class="card">
+    <h1 class="text-2xl font-bold mb-4">🏰 قصر خالتي إيمان</h1>
+    <button onclick="openDoor()" class="bg-pink-500 text-white px-4 py-2 rounded-xl">
+      دخول القصر
+    </button>
+  </div>
+</div>
+
+<div id="app" style="display:none; padding:20px; text-align:center;">
+
+  <h1 class="text-3xl font-bold mb-4">🎁 الهدايا لخالتي إيمان</h1>
+
+  <button onclick="openGift('💙 احترام', 'احترامكِ أكبر من كل الكلمات 💖')" class="bg-pink-400 px-4 py-2 m-2 rounded-xl">هدية 1</button>
+  <button onclick="openGift('🌸 تقدير', 'أنتِ أساس الخير في العائلة 🌿')" class="bg-pink-400 px-4 py-2 m-2 rounded-xl">هدية 2</button>
+  <button onclick="openGift('✨ دعاء', 'ربي يحفظك من كل شر 💫')" class="bg-pink-400 px-4 py-2 m-2 rounded-xl">هدية 3</button>
+
+  <div id="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center;">
+    <div class="card">
+      <h2 id="title"></h2>
+      <p id="text"></p>
+      <button onclick="closeGift()" class="mt-4 bg-pink-500 text-white px-3 py-1 rounded-xl">إغلاق</button>
+    </div>
+  </div>
+
+  <div id="final" style="display:none; margin-top:30px;" class="card">
+    👑 خالتي إيمان... أنتِ تاج فوق رؤوسنا 💖
+  </div>
+
+</div>
+
+<script>
+function openDoor(){
+  document.querySelector('.left')?.remove();
+  document.querySelector('.right')?.remove();
+
+  let left = document.createElement('div');
+  left.className = 'door left';
+  let right = document.createElement('div');
+  right.className = 'door right';
+
+  document.body.appendChild(left);
+  document.body.appendChild(right);
+
+  setTimeout(()=>{
+    document.getElementById('door').style.display='none';
+    document.getElementById('app').style.display='block';
+  },2000);
+}
+
+function openGift(t, txt){
+  document.getElementById('modal').style.display='flex';
+  document.getElementById('title').innerText=t;
+  document.getElementById('text').innerText=txt;
+}
+
+function closeGift(){
+  document.getElementById('modal').style.display='none';
+}
+</script>
+
+</body>
+</html>

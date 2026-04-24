@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>إلى خالتي إيمان 💙</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:#05070d;
+  color:white;
+  font-family: Arial, sans-serif;
+  overflow:hidden;
+}
+
+/* خلفية نجوم هادئة */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
+
+/* المشاهد */
+.scene{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+
+  opacity:0;
+  transform:scale(1.1);
+  filter:blur(10px);
+  transition:1.5s ease;
+  padding:30px;
+}
+
+.scene.active{
+  opacity:1;
+  transform:scale(1);
+  filter:blur(0);
+}
+
+/* عنوان */
+h1{
+  font-size:40px;
+  color:#b9e6ff;
+  text-shadow:0 0 20px rgba(185,230,255,0.6);
+  margin-bottom:20px;
+}
+
+/* نص */
+p{
+  max-width:800px;
+  font-size:20px;
+  line-height:2.2;
+  color:#e6e6e6;
+}
+
+/* زر */
+button{
+  margin-top:30px;
+  padding:12px 25px;
+  border:none;
+  border-radius:20px;
+  background:#7fd3ff;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 15px #7fd3ff;
+}
+
+/* تأثير كتابة */
+.type{
+  border-right:2px solid white;
+  white-space:nowrap;
+  overflow:hidden;
+}
+
+/* البداية */
+#start{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  background:radial-gradient(circle, #0b1a2b, #000);
+  z-index:10;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<!-- البداية -->
+<div id="start">
+  <h1>💙 رسالة هادئة</h1>
+  <p>اضغط لتبدأ التجربة</p>
+  <button onclick="start()">دخول</button>
+</div>
+
+<!-- Scene 1 -->
+<div class="scene active" id="s1">
+  <h1>إلى خالتي إيمان</h1>
+  <p class="type" id="t1"></p>
+  <button onclick="next(2)">التالي</button>
+</div>
+
+<!-- Scene 2 -->
+<div class="scene" id="s2">
+  <h1>امرأة عظيمة</h1>
+  <p>
+    أنتِ مو مجرد إنسانة عادية…  
+    أنتِ روح قوية، صابرة، ومليانة كرامة وطيبة.  
+    وجودج بالحياة نعمة حقيقية.
+  </p>
+  <button onclick="next(3)">التالي</button>
+</div>
+
+<!-- Scene 3 -->
+<div class="scene" id="s3">
+  <h1>تربيتك</h1>
+  <p>
+    كل جمال الأخلاق اللي نشوفه بفرح…  
+    هو انعكاس لقلبك النظيف وتربيتك العظيمة.  
+    الأم ما تربي فقط… الأم تصنع روح.
+  </p>
+  <button onclick="next(4)">التالي</button>
+</div>
+
+<!-- Scene 4 -->
+<div class="scene" id="s4">
+  <h1>مكانتك</h1>
+  <p>
+    والله أحبج مثل أمي…  
+    وأحترمج من قلبي بدون أي تردد.  
+    لأنك إنسانة تستحق كل خير بهالدنيا.
+  </p>
+  <button onclick="next(5)">التالي</button>
+</div>
+
+<!-- Scene 5 -->
+<div class="scene" id="s5">
+  <h1>دعاء</h1>
+  <p>
+    أسأل الله يوفقج بكل خطوة،  
+    ويجبر خاطرج،  
+    ويعوضج عن كل تعب،  
+    ويحفظج من كل شر.
+  </p>
+  <button onclick="next(6)">التالي</button>
+</div>
+
+<!-- Scene 6 -->
+<div class="scene" id="s6">
+  <h1>ختام</h1>
+  <p>
+    هذا حسين يحب يكلج:  
+    أنتِ مو مجرد خالة… أنتِ قيمة كبيرة بحياتنا 💙  
+    وباقي الدعاء إلك بكل لحظة.
+  </p>
+</div>
+
+<script>
+
+/* البداية */
+function start(){
+  document.getElementById("start").style.opacity="0";
+  setTimeout(()=>{
+    document.getElementById("start").style.display="none";
+    typeText();
+  },1000);
+}
+
+/* انتقال */
+function next(n){
+  document.querySelector(".scene.active").classList.remove("active");
+  document.getElementById("s"+n).classList.add("active");
+}
+
+/* كتابة تدريجية */
+let text = "هذا الموقع مو كلام فقط… هذا شعور من القلب.";
+let i=0;
+
+function typeText(){
+  let el = document.getElementById("t1");
+  let interval = setInterval(()=>{
+    el.innerHTML += text[i];
+    i++;
+    if(i>=text.length) clearInterval(interval);
+  },60);
+}
+
+/* نجوم هادئة */
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+
+for(let i=0;i<120;i++){
+  stars.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*1.5
+  });
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  ctx.fillStyle="white";
+  stars.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fill();
+
+    s.y += 0.2;
+    if(s.y>canvas.height){
+      s.y=0;
+    }
+  });
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+
+</script>
+
+</body>
+</html>

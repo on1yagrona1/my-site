@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى فروحاتي الدفرنتت 🤍</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Reem+Kufi:wght@500&display=swap');
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fff4f4;
+            color: #4a4a4a;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* صفحة القفل السرية */
+        #lock-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ffe3e3 0%, #ffd1d1 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: all 0.5s ease;
+        }
+        .lock-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+        }
+        .lock-box h2 {
+            font-family: 'Reem Kufi', sans-serif;
+            color: #ff4d6d;
+            margin-bottom: 20px;
+        }
+        .lock-box input {
+            width: 80%;
+            padding: 12px;
+            border: 2px solid #ffd1d1;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+            margin-bottom: 15px;
+        }
+        .lock-box button {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .lock-box button:hover { background-color: #ff758f; }
+        #error-msg { color: red; font-size: 14px; margin-top: 10px; display: none; }
+
+        /* المحتوى الرئيسي */
+        #main-content { display: none; padding: 20px; }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(rgba(255,244,244,0.8), rgba(255,244,244,1));
+            border-radius: 0 0 50px 50px;
+        }
+        header h1 {
+            font-family: 'Reem Kufi', sans-serif;
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        header p { font-size: 1.2rem; color: #7a7a7a; margin-top: 0; }
+
+        /* ركن الإحصائيات السريع */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            text-align: center;
+            border-bottom: 3px solid #ff4d6d;
+            flex: 1;
+            min-width: 120px;
+        }
+        .stat-card h4 { margin: 0; color: #ff4d6d; font-size: 1.4rem; }
+        .stat-card p { margin: 5px 0 0 0; font-size: 0.9rem; color: #888; }
+
+        /* ركن الطفولة المميز */
+        .childhood-section {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .childhood-section h2 { color: #ff4d6d; font-family: 'Reem Kufi', sans-serif; margin-bottom: 10px; }
+        .childhood-flex {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .childhood-img {
+            width: 45%;
+            min-width: 250px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* شريط الذكريات التيملاين */
+        .timeline {
+            max-width: 800px;
+            margin: 50px auto;
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #ffccf2;
+        }
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .timeline-item.right { right: 0; text-align: right; padding-right: 40px; }
+        .timeline-item.left { right: 50%; text-align: left; padding-left: 40px; }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 25px;
+            width: 16px;
+            height: 16px;
+            background: #ff4d6d;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        .right .timeline-dot { right: -8px; }
+        .left .timeline-dot { left: -8px; }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            border-right: 5px solid #ff4d6d;
+        }
+        .left .timeline-content { border-right: none; border-left: 5px solid #ff4d6d; text-align: right; }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: #ff4d6d;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .timeline-content h3 { margin-top: 0; color: #333; }
+        .timeline-content p { line-height: 1.6; font-size: 0.95rem; }
+        .timeline-content img {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        /* شبكة معرض السوالف والمحادثات */
+        .gallery-section {
+            max-width: 950px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .gallery-section h2 {
+            text-align: center;
+            font-family: 'Reem Kufi', sans-serif;
+            color: #ff4d6d;
+            margin-bottom: 30px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .grid-item {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease;
+            border: 1px solid #fff2f2;
+        }
+        .grid-item:hover { transform: translateY(-5px); }
+        .grid-item img { width: 100%; display: block; }
+        .grid-desc { padding: 15px; text-align: center; background: #fff; }
+        .grid-desc h4 { margin: 0 0 5px 0; color: #ff4d6d; }
+        .grid-desc p { margin: 0; font-size: 0.85rem; color: #666; line-height: 1.4; }
+
+        footer { text-align: center; padding: 50px 20px; color: #b5b5b5; font-size: 0.9rem; border-top: 1px dashed #ffd1d1; margin-top: 60px; }
+
+        /* لتوافق الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .timeline::before { right: 20px; }
+            .timeline-item { width: 100%; right: 0 !important; left: 0 !important; padding-right: 40px !important; padding-left: 10px !important; }
+            .timeline-dot { right: 12px !important; left: auto !important; }
+            .timeline-content { border-left: none !important; border-right: 5px solid #ff4d6d !important; text-align: right !important; }
+            header h1 { font-size: 2rem; }
+            .childhood-img { width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <div class="lock-box">
+            <h2>دفتر ذكرياتنا مـقـفـول 🔐</h2>
+            <p style="font-size: 0.9rem; color: #666;">اكتبي الباسورد السري حتى يفتح الدفتر (تلميح: تاريخ ميلادج المميز بالكامل بدون فواصل مثلاً 201041)</p>
+            <input type="password" id="password-input" placeholder="اكتبي الرمز هنا...">
+            <br>
+            <button onclick="checkPassword()">افتحي قلبي ❤️</button>
+            <p id="error-msg">الرمز غلط يا عمري.. ركزي وباعي للتلميح! 😉</p>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <header>
+            <h1>إلى فروحاتي الدفرنتت 🤍</h1>
+            <p>كل ذكرى وياج هي عمر كامل.. هذي حكاياتنا ملخصة هنا</p>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h4>+3 ساعات</h4>
+                    <p>المكالمة ما تنمل</p>
+                </div>
+                <div class="stat-card">
+                    <h4>∞</h4>
+                    <p>جرعة الأمان وياج</p>
+                </div>
+                <div class="stat-card">
+                    <h4>100%</h4>
+                    <p>دفرنتت عن الكل</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="childhood-section">
+            <h2>من صغرنا والدنيا كاتبتنا لبعض 🥺✨</h2>
+            <p style="color: #666; font-size: 0.95rem;">شوفي جمال ضحكتج وأنتِ صغيرة.. وشوفينا شلون صرنا لبعض يا أحلى فروحة بالكون.</p>
+            <div class="childhood-flex">
+                <img src="farah-child.jpg" class="childhood-img" alt="فرح وهي صغيرة">
+                <img src="together-child.jpg" class="childhood-img" alt="حسين وفرح">
+            </div>
+        </section>
+
+        <section class="timeline">
+            
+            <div class="timeline-item right">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">1 نيسان 2010</div>
+                    <h3>أجمل يوم بالأرض ✨</h3>
+                    <p>اليوم اللي نورتي بيه الدنيا، وجيتي حتى بعدين تصيرين كل دنيتي وفروحاتي الدفرنتت الغالية. كل عام وأنتِ أحلى شي صار بحياتي وعمر حسين كله.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">10 نيسان</div>
+                    <h3>اليوم التاريخي (موافقة خالتو) ❤️</h3>
+                    <p>هذا اليوم ما ينسي أبداً، يوم اللي خالتو الغالية وافقت على علاقتنا وشافت شكد أنا شاريج وأحبج ومستعد أسوي كلشي لجمال عيونج وبدينا طريقنا سوة بمباركتها.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">ركن الأمان الخاص بنا 🥺</div>
+                    <h3>"أضمك بنص قلبي"</h3>
+                    <p>لما كلتيلي (يتم عمر حسين بيها أضمك بنص قلبي).. بوقتها حسيت ملكت الدنيا. الأمان وياج مو الأمان العادي، الأمان اللي يخلي قلبي يهدأ لو الدنيا كلها مكلوبة.</p>
+                    <img src="aman1.jpg" alt="سالفة الأمان">
+                </div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">طقوس قبل النوم 😴❤️</div>
+                    <h3>يـنةةة نسووي نوووم؟</h3>
+                    <p>هالسالفة مالتنا والأشياء العفوية قبل ما ننام، من نكول "كل عام وأنتم بخير" بوسط الأيام العادية ونموت ضحك، هذي التفاصيل الصغيرة تسوى عندي الدينا كلها.</p>
+                    <img src="noom.jpg" alt="سالفة النوم">
+                </div>
+            </div>
+
+        </section>
+
+        <section class="gallery-section">
+            <h2>ألبوم سوالفنا وضحكاتنا 📸✨</h2>
+            <div class="grid-container">
+
+                <div class="grid-item">
+                    <img src="call1.png" alt="المكالمة الطويلة">
+                    <div class="grid-desc">
+                        <h4>حجينا الما يخلص 📞🤍</h4>
+                        <p>3 ساعات و 8 دقائق من السوالف والضحك، والوقت وياج يمر بلمحة بصر بدون ما نحس بيه.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="call-view.jpg" alt="الاتصال">
+                    <div class="grid-desc">
+                        <h4>أجمل واجهة بتلفوني 🥰</h4>
+                        <p>لما يرن التلفون وتطلع صورتج المكتوب عليها "My twin"، قلبي يدق قبل الموبايل.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="cats.jpg" alt="ميمز البزازين">
+                    <div class="grid-desc">
+                        <h4>ركن البزازين والميمز 🐱😂</h4>
+                        <p>لما ندز ميمز بزازين تمثلنا.. وحدة نايمة ووحدة مطلعة لسانها! دفرنتت حتى بالميمز.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="barbie.jpg" alt="سالفة باربي">
+                    <div class="grid-desc">
+                        <h4>سر باربي الخفي 🤫😂</h4>
+                        <p>يقولون تباوع باربي بالسر وماتكول لأحد! فديت الذوق المختلف مالتنا.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="ebn-am.jpg" alt="ابن عمي">
+                    <div class="grid-desc">
+                        <h4>ابن عمي اللي يزيد همي 🤦‍♂️😂</h4>
+                        <p>من تموتين ضحك على "مريم بت عمج".. الضحكة مالتج ترد الروح.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="aman2.jpg" alt="الأمان">
+                    <div class="grid-desc">
+                        <h4>تعرفين شنو أكثر شعور؟ ❤️</h4>
+                        <p>الأمان اللي يخلي الإنسان يهدأ.. وأنيييييي أحبججججج بعدددد أكثر وأكثر.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="tabana.jpg" alt="فرحن تعبونة">
+                    <div class="grid-desc">
+                        <h4>سوودة عليه يرووحي 🥺</h4>
+                        <p>حتى بكلمة "فرحن تعبونة" تصيرين أحلى وألطف وحدة بالكون، واسم الله من التعب.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="maqaleb.jpg" alt="المقالب">
+                    <div class="grid-desc">
+                        <h4>فرح لا تمشي عليج مقالب حسين! 🎬😂</h4>
+                        <p>أحلى لقطات ومقالب شسمة شسمة.. وكلمة "أحبببببببك عوود هيهيهيهي".</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="love1.jpg" alt="أحبيبك">
+                    <div class="grid-desc">
+                        <h4>أحبيبك يارووووحبيبي 🤍</h4>
+                        <p>الساعة 1:20 بالليل.. والكلمة اللي تجدد روحي بكل مرة تقوليها.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="bye.jpg" alt="بيباي">
+                    <div class="grid-desc">
+                        <h4>بيباااييي حثوووونن 😍</h4>
+                        <p>دلع "حثونن الدفرنتت الماكوو منةة".. طالع من حلكج عسل.</p>
+                    </div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="see-you.jpg" alt="نوم العوافي">
+                    <div class="grid-desc">
+                        <h4>ثييوووو حبيب رووحي 🌟</h4>
+                        <p>أحلى نوم عوافي بالدنيا قبل ما ننام.. تخليني أنام وأني أسعد إنسان بالأرض.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            صنع بكل حب وحنين بواسطة هـسـيـن لـ فروحـتـه الدفرنتت 🤍 | 2026
+        </footer>
+    </div>
+
+    <script>
+        function checkPassword() {
+            var password = document.getElementById("password-input").value;
+            // الرمز السري هو 201041 (تاريخ ميلادها)
+            if (password === "201041") {
+                document.getElementById("lock-screen").style.opacity = "0";
+                setTimeout(function() {
+                    document.getElementById("lock-screen").style.display = "none";
+                    document.getElementById("main-content").style.display = "block";
+                }, 500);
+            } else {
+                document.getElementById("error-msg").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
